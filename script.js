@@ -55,6 +55,7 @@ const WHISPERS = [
     cap: '"A Lifetime of Tomorrows 💍"',
     title: 'A Lifetime of Tomorrows',
     text: 'Knowing that whatever storms or sunrises the universe brings, I get to face all of them with you.'
+  }
 ];
 
 /* Preload all gallery images in memory for 0ms instantaneous swapping */
