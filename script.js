@@ -55,8 +55,15 @@ const WHISPERS = [
     cap: '"A Lifetime of Tomorrows 💍"',
     title: 'A Lifetime of Tomorrows',
     text: 'Knowing that whatever storms or sunrises the universe brings, I get to face all of them with you.'
-  }
 ];
+
+/* Preload all gallery images in memory for 0ms instantaneous swapping */
+WHISPERS.forEach(w => {
+  if (w.img) {
+    const pImg = new Image();
+    pImg.src = w.img;
+  }
+});
 
 /* ── WISHES ─────────────────────── */
 const WISHES = [
@@ -947,25 +954,20 @@ function initCh3() {
     // 2. Ripple shockwave ring from clicked point
     triggerGardenRipple(posX, posY);
 
-    // 3. Update memory details
+    // 4. Update memory details
     if (iconEl) iconEl.textContent = w.icon;
     if (titleEl) titleEl.textContent = w.title;
     if (descEl) revealPetalUnfurl(descEl, w.text);
 
-    // 5. Photo frame lighting flash and polaroid swap
-    if (photoEl) {
-      photoEl.classList.remove('flash-glow');
-      void photoEl.offsetWidth;
-      photoEl.classList.add('flash-glow');
-    }
-
+    // 5. Instantaneous photo swap with Polaroid Spring Flip Animation
     if (imgEl && w.img) {
-      imgEl.style.opacity = '0';
-      setTimeout(() => {
-        imgEl.src = w.img;
-        imgEl.style.opacity = '1';
-        if (capEl) capEl.textContent = w.cap;
-      }, 180);
+      imgEl.src = w.img;
+      if (capEl) capEl.textContent = w.cap;
+    }
+    if (photoEl) {
+      photoEl.classList.remove('photo-swap-anim');
+      void photoEl.offsetWidth; // trigger reflow for instant animation restart
+      photoEl.classList.add('photo-swap-anim');
     }
 
     // 6. Card pulse glow
